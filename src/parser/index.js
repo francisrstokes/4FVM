@@ -1,18 +1,7 @@
 const preprocessTokens = require('./preprocess-tokens');
+const validPatterns = require('./valid-patterns');
 
-const label = require('./valid-patterns/label');
-const ld = require('./valid-patterns/ld');
-const nop = require('./valid-patterns/nop');
-const cmp = require('./valid-patterns/cmp');
-const add = require('./valid-patterns/add');
-
-const validPatterns = [
-  ...label,
-  ...nop,
-  ...ld,
-  ...cmp,
-  ...add
-];
+// console.log(validPatterns.length)
 
 const matchPattern = (checkTokens) =>
   (validTokens, ci) => {
@@ -27,7 +16,7 @@ module.exports = (_tokens) => {
     const startTree = tree.length;
     for (const [check, descriptor] of validPatterns) {
       // Exit if there aren't enough tokens to check
-      if (i + check.length > tokens.length) break;
+      if (i + check.length > tokens.length) continue;
 
       const checkTokens = tokens.slice(i, i + check.length);
       const isMatch = check.every(matchPattern(checkTokens));
