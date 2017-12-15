@@ -1,8 +1,6 @@
 const preprocessTokens = require('./preprocess-tokens');
 const validPatterns = require('./valid-patterns');
 
-// console.log(validPatterns.length)
-
 const matchPattern = (checkTokens) =>
   (validTokens, ci) => {
     return validTokens.includes(checkTokens[ci].type);

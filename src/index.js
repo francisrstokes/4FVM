@@ -1,5 +1,7 @@
 const tokenise = require('./tokeniser');
 const parse = require('./parser');
+const encode = require('./encode');
+
 const program = `
 myprogram:
 NOP
@@ -16,6 +18,10 @@ SWP A, B
 `;
 
 
-const tokens = tokenise(program);
-const parseTree = parse(tokens);
-console.log(JSON.stringify(parseTree, null, '  '));
+(async () => {
+  const tokens = tokenise(program);
+  const parseTree = parse(tokens);
+  const encoded = await encode(parseTree);
+})();
+
+// console.log(parseTree[0].type)
