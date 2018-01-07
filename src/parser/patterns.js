@@ -1,10 +1,7 @@
 const opcodes = require('../opcodes');
-const opcodeObject = opcodes.reduce((acc, cur) => {
-  acc[cur] = cur;
-  return acc;
-}, {});
+const { arrToObjKeys } = require('../util');
 
 module.exports = Object.assign(
   { 'LABEL': 'LABEL' },
-  opcodeObject
+  arrToObjKeys(opcodes)
 );

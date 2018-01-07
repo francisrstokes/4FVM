@@ -1,10 +1,21 @@
 const preprocessTokens = require('./preprocess-tokens');
 const validPatterns = require('./valid-patterns');
 
-const matchPattern = (checkTokens) =>
-  (validTokens, ci) => {
-    return validTokens.includes(checkTokens[ci].type);
-  };
+const { flip, nth, prop, map, compose } = require('ramda');
+
+const first = nth(0);
+
+const matchPattern = (checkTokens) => (validTokens, ci) => {
+  return validTokens.includes(checkTokens[ci].type);
+};
+
+const populateOperandPair = (checkTokens) => (pair) => {
+  const getTokenValueFromPair = compose(prop('value'), flip(nth)(checkTokens), nth(1));
+  return [
+    first(pair),
+    getTokenValueFromPair(pair)
+  ];
+};
 
 module.exports = (_tokens) => {
   const tokens = preprocessTokens(_tokens);
@@ -20,7 +31,7 @@ module.exports = (_tokens) => {
       const isMatch = check.every(matchPattern(checkTokens));
 
       if (isMatch) {
-        const operands = descriptor.operands.map(index => checkTokens[index]);
+        const operands = map(populateOperandPair(checkTokens), descriptor.operands);
         tree.push({
           type: descriptor.type,
           operands
@@ -30,7 +41,7 @@ module.exports = (_tokens) => {
       }
     }
     if (startTree === tree.length) {
-      console.log('Invalid instruction encountered at token: ', JSON.stringify(tokens[i]));
+      throw new Error('Invalid instruction encountered at token: ', JSON.stringify(tokens[i]));
     }
   }
 

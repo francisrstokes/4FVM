@@ -1,15 +1,18 @@
 const tt = require('../../token-types');
 const patterns = require('../patterns');
+const ot = require('../../operand-types');
 
 module.exports = [
   [
     [
       [tt.PSH],
-      [tt.HEX_VALUE, tt.DEC_VALUE]
+      [tt.HEX_VALUE, tt.DEC_VALUE, tt.LABEL]
     ],
     {
       type: patterns.PSH_NUM,
-      operands: [1]
+      operands: [
+        [ot.NUM, 1]
+      ]
     }
   ],
   [
@@ -19,7 +22,9 @@ module.exports = [
     ],
     {
       type: patterns.PSH_REG,
-      operands: [1]
+      operands: [
+        [ot.REG, 1]
+      ]
     }
   ],
   [
@@ -29,7 +34,9 @@ module.exports = [
     ],
     {
       type: patterns.PSH_REG_PTR,
-      operands: [1]
+      operands: [
+        [ot.REG, 1]
+      ]
     }
   ]
 ];
