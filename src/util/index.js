@@ -40,6 +40,9 @@ const toBuffer = compose(Future.encase(Buffer.from), prop('buffer'));
 // toUint16 :: [Int] -> [Uint16]
 const toUint16 = (arr) => new Uint16Array(arr);
 
+// mFold :: (e -> b) -> (a -> c) -> M e a -> (b | c)
+const mFold = curry((errFn, successFn, M) => M.fold(errFn, successFn));
+
 module.exports = {
   achain,
   flatten,
@@ -51,5 +54,6 @@ module.exports = {
   indexedReduce,
   indexOf,
   toUint16,
-  toBuffer
+  toBuffer,
+  mFold
 };
