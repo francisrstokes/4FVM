@@ -1,14 +1,12 @@
 const Future = require('fluture');
-const { curry, prop, compose } = require('ramda');
-
 const tokenise = require('./tokeniser');
 const parse = require('./parser');
 const encode = require('./encode');
 const validateAST = require('./validate-ast');
+const writeBinary = require('./write-bin');
+const { toBuffer } = require('./util');
 
-const { writeFile } = require('fs');
-// const src = `
-// `;
+const onErr = (err) => console.log(`4FVM Error: ${err}`);
 
 const src = `
 myprogram:
@@ -28,10 +26,6 @@ place:
   SWP A, B
 `;
 
-const writeBinary = curry((filename, buffer) =>
-  Future.node(done => writeFile(filename, buffer, done)));
-
-const toBuffer = compose(Buffer.from, prop('buffer'));
 
 const program = Future
   .of(src)
@@ -39,15 +33,8 @@ const program = Future
   .chain(parse)
   .chain(validateAST)
   .chain(encode)
-  .map(toBuffer)
-  .chain(writeBinary('test.bin'));
+  .chain(toBuffer)
+  .chain(writeBinary('test.bin'))
+  .map(() => 'Success')
 
-program.fork(
-  (err) => {
-    console.log(`4FVM Error: ${err}`)
-  },
-  (x) => {
-    console.log(JSON.stringify(x, null, '  '));
-    debugger;
-  }
-);
+program.fork(onErr, console.log);

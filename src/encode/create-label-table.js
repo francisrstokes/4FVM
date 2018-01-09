@@ -6,6 +6,7 @@ const {
   merge
 } = require('ramda');
 
+// createLabelTable :: [Instructions] -> Dict String Int
 module.exports = indexedReduce((acc, pattern, index) => {
   if (pattern.type === patterns.LABEL) {
     return merge({ [getLabelValue(pattern)]: index - keys(acc).length }, acc);

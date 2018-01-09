@@ -3,15 +3,19 @@ const preprocessTokens = require('./preprocess-tokens');
 const validPatterns = require('./valid-patterns');
 const { flip, nth, prop, map, compose, lensPath, lensProp, over } = require('ramda');
 
+// matchPattern :: [Token] -> [TokenType] -> Int -> Boolean
 const matchPattern = (checkTokens) => (validTokens, ci) => {
   return validTokens.includes(checkTokens[ci].type);
 };
 
+// data Operand = { Value | Type }
+// populateOperands :: [Token] -> Operand -> Operand
 const populateOperands = (checkTokens) => (operand) => {
   const getTokenValue = compose(prop('value'), flip(nth)(checkTokens));
   return over(lensProp('value'), getTokenValue, operand);
 };
 
+// parse :: [Token] -> Future Error [Instruction]
 module.exports = (_tokens) => {
   const tokens = preprocessTokens(_tokens);
   const tree = [];

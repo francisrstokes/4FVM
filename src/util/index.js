@@ -1,51 +1,55 @@
-const { compose, map, curry, reduce, addIndex } = require('ramda');
-const Maybe = require('folktale/maybe');
+const Future = require('fluture');
+const { prop, compose, map, curry, reduce, addIndex } = require('ramda');
 
-const clamp = (value, min, max) => (value < min)
-? min
-: (value > max)
-  ? max
-  : value;
+// clamp :: Int -> Int -> Int -> Int
+const clamp = curry((min, max, value) =>
+  (value < min)
+    ? min
+    : (value > max)
+      ? max
+      : value
+);
 
-const clamp16 = (value) => clamp(value, 0, 0xFFFF);
+// clamp16 :: Int -> Int
+const clamp16 = clamp(0, 0xFFFF);
 
-const property = curry((obj, prop) => obj[prop]);
-const replace = curry((regex, replacer, str) => str.replace(regex, replacer));
-const toUpperCase = (str) => str.toUpperCase();
-
+// arrToObjKeys :: [String] -> Dict String String
 const arrToObjKeys = reduce((acc, cur) => Object.assign({ [cur]: cur }, acc), {});
 
-const indexOf = curry((item, array) => {
-  return array.indexOf(item)
-});
-const maybeIndexOf = curry((item, array) => {
-  const idx = indexOf(item, array);
-  if (idx >= 0) return Maybe.Just(idx);
-  return Maybe.Nothing();
-});
-
+// regexTest :: Regex -> String -> Boolean
 const regexTest = curry((regex, s) => regex.test(s));
 
-const isString = (x) => typeof x === 'string';
+// indexedReduce :: ((a, b) -> a) -> a -> [b] -> a
 const indexedReduce = addIndex(reduce);
 
+// nativeToString :: a -> String
 const nativeToString = (x) => x.toString();
 
+// flatten :: [[a]] -> [a]
 const flatten = reduce((acc, cur) => [...acc, ...cur], []);
+
+// achain :: [[a]] -> [b]
 const achain = (fn) => compose(flatten, map(fn));
+
+// indexOf :: [a] -> a -> Int
+const indexOf = curry((xs, x) => xs.indexOf(x));
+
+// toBuffer :: [Uint16] -> Future Error Buffer Int
+const toBuffer = compose(Future.encase(Buffer.from), prop('buffer'));
+
+// toUint16 :: [Int] -> [Uint16]
+const toUint16 = (arr) => new Uint16Array(arr);
 
 module.exports = {
   achain,
+  flatten,
   clamp,
   clamp16,
-  property,
-  replace,
-  toUpperCase,
   arrToObjKeys,
   regexTest,
-  isString,
   nativeToString,
+  indexedReduce,
   indexOf,
-  maybeIndexOf,
-  indexedReduce
+  toUint16,
+  toBuffer
 };
