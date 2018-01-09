@@ -1,0 +1,1 @@
+module.exports = (arr) => new Uint16Array(arr);

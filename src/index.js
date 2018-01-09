@@ -1,9 +1,12 @@
 const Future = require('fluture');
+const { curry, prop, compose } = require('ramda');
+
 const tokenise = require('./tokeniser');
 const parse = require('./parser');
 const encode = require('./encode');
 const validateAST = require('./validate-ast');
 
+const { writeFile } = require('fs');
 // const src = `
 // `;
 
@@ -25,13 +28,19 @@ place:
   SWP A, B
 `;
 
+const writeBinary = curry((filename, buffer) =>
+  Future.node(done => writeFile(filename, buffer, done)));
+
+const toBuffer = compose(Buffer.from, prop('buffer'));
 
 const program = Future
   .of(src)
   .chain(tokenise)
   .chain(parse)
   .chain(validateAST)
-  .chain(encode);
+  .chain(encode)
+  .map(toBuffer)
+  .chain(writeBinary('test.bin'));
 
 program.fork(
   (err) => {

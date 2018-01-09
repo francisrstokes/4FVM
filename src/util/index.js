@@ -31,7 +31,8 @@ const indexedReduce = addIndex(reduce);
 
 const nativeToString = (x) => x.toString();
 
-const achain = compose(reduce((acc, cur) => [...acc, ...cur], []), map);
+const flatten = reduce((acc, cur) => [...acc, ...cur], []);
+const achain = (fn) => compose(flatten, map(fn));
 
 module.exports = {
   achain,

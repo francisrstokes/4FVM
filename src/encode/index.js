@@ -5,21 +5,22 @@ const {
   compose,
   filter
 } = require('ramda');
+const { achain } = require('../util');
 
 const getEncodedParts = require('./get-encoded-parts');
 const applyLabels = require('./apply-labels');
 const createLabelTable = require('./create-label-table');
+const toUint16 = require('./to-uint16');
 
 module.exports = (ast) => {
   const lt = createLabelTable(ast);
 
   const encode = compose(
-    map(getEncodedParts),
+    toUint16,
+    achain(getEncodedParts),
     map(applyLabels(lt)),
     filter((pattern) => pattern.type !== patterns.LABEL)
   );
 
-  const nast = encode(ast);
-  debugger;
-  return Future.of(ast);
+  return Future.of(encode(ast));
 };
