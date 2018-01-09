@@ -13,8 +13,8 @@ module.exports = [
     {
       type: patterns.LD_REG_NUM,
       operands: [
-        [ot.REG, 1],
-        [ot.NUM, 3]
+        { type: ot.REG, value: 1 },
+        { type: ot.NUM, value: 3 }
       ]
     }
   ],
@@ -28,8 +28,8 @@ module.exports = [
     {
       type: patterns.LD_REG_REG,
       operands: [
-        [ot.REG, 1],
-        [ot.REG, 3]
+        { type: ot.REG, value: 1 },
+        { type: ot.REG, value: 3 }
       ]
     }
   ],
@@ -43,8 +43,8 @@ module.exports = [
     {
       type: patterns.LD_REG_PTR,
       operands: [
-        [ot.REG, 1],
-        [ot.PTR, 3]
+        { type: ot.REG, value: 1 },
+        { type: ot.REG, value: 3 }
       ]
     }
   ],
@@ -52,45 +52,45 @@ module.exports = [
   [
     [
       [tt.LD],
-      [tt.HEX_VALUE, tt.DEC_VALUE, tt.LABEL],
+      [tt.HEX_VALUE, tt.DEC_VALUE],
       [tt.OPERAND_SEPARATOR],
       [tt.HEX_VALUE, tt.DEC_VALUE, tt.LABEL]
     ],
     {
       type: patterns.LD_NUM_NUM,
       operands: [
-        [ot.NUM, 1],
-        [ot.NUM, 3]
+        { type: ot.NUM, value: 1 },
+        { type: ot.NUM, value: 3 }
       ]
     }
   ],
   [
     [
       [tt.LD],
-      [tt.HEX_VALUE, tt.DEC_VALUE, tt.LABEL],
+      [tt.HEX_VALUE, tt.DEC_VALUE],
       [tt.OPERAND_SEPARATOR],
       [tt.REG_A, tt.REG_B, tt.REG_C, tt.REG_D]
     ],
     {
       type: patterns.LD_NUM_REG,
       operands: [
-        [ot.NUM, 1],
-        [ot.REG, 3]
+        { type: ot.NUM, value: 1 },
+        { type: ot.REG, value: 3 }
       ]
     }
   ],
   [
     [
       [tt.LD],
-      [tt.HEX_VALUE, tt.DEC_VALUE, tt.LABEL],
+      [tt.HEX_VALUE, tt.DEC_VALUE],
       [tt.OPERAND_SEPARATOR],
       [tt.PTR_A, tt.PTR_B, tt.PTR_C, tt.PTR_D]
     ],
     {
       type: patterns.LD_NUM_PTR,
       operands: [
-        [ot.NUM, 1],
-        [ot.PTR, 3]
+        { type: ot.NUM, value: 1 },
+        { type: ot.REG, value: 3 }
       ]
     }
   ],
@@ -105,8 +105,8 @@ module.exports = [
     {
       type: patterns.LD_PTR_NUM,
       operands: [
-        [ot.PTR, 1],
-        [ot.NUM, 3]
+        { type: ot.REG, value: 1 },
+        { type: ot.NUM, value: 3 }
       ]
     }
   ],
@@ -120,8 +120,8 @@ module.exports = [
     {
       type: patterns.LD_PTR_REG,
       operands: [
-        [ot.PTR, 1],
-        [ot.REG, 3]
+        { type: ot.REG, value: 1 },
+        { type: ot.REG, value: 3 }
       ]
     }
   ],
@@ -135,8 +135,8 @@ module.exports = [
     {
       type: patterns.LD_PTR_PTR,
       operands: [
-        [ot.PTR, 1],
-        [ot.PTR, 3]
+        { type: ot.REG, value: 1 },
+        { type: ot.REG, value: 3 }
       ]
     }
   ]

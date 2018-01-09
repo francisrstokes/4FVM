@@ -8,7 +8,7 @@ module.exports = [
     {
       type: patterns.LABEL,
       operands: [
-        [ot.LABEL, 0]
+        { type: ot.LABEL, value: 0 }
       ]
     }
   ]

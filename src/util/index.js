@@ -1,4 +1,4 @@
-const { curry, reduce, addIndex } = require('ramda');
+const { compose, map, curry, reduce, addIndex } = require('ramda');
 const Maybe = require('folktale/maybe');
 
 const clamp = (value, min, max) => (value < min)
@@ -31,7 +31,10 @@ const indexedReduce = addIndex(reduce);
 
 const nativeToString = (x) => x.toString();
 
+const achain = compose(reduce((acc, cur) => [...acc, ...cur], []), map);
+
 module.exports = {
+  achain,
   clamp,
   clamp16,
   property,

@@ -11,7 +11,7 @@ module.exports = [
     {
       type: patterns.PSH_NUM,
       operands: [
-        [ot.NUM, 1]
+        { type: ot.NUM, value: 1 }
       ]
     }
   ],
@@ -23,7 +23,7 @@ module.exports = [
     {
       type: patterns.PSH_REG,
       operands: [
-        [ot.REG, 1]
+        { type: ot.REG, value: 1 }
       ]
     }
   ],
@@ -35,7 +35,7 @@ module.exports = [
     {
       type: patterns.PSH_REG_PTR,
       operands: [
-        [ot.REG, 1]
+        { type: ot.REG, value: 1 }
       ]
     }
   ]

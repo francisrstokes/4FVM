@@ -13,8 +13,8 @@ module.exports = [
     {
       type: patterns.RSF_REG_NUM,
       operands: [
-        [ot.REG, 1],
-        [ot.NUM, 3]
+        { type: ot.REG, value: 1 },
+        { type: ot.NUM, value: 3 }
       ]
     }
   ]

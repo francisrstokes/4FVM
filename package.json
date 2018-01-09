@@ -9,6 +9,7 @@
   "author": "Francis Stokes",
   "license": "ISC",
   "dependencies": {
+    "daggy": "^1.2.0",
     "fluture": "^8.0.0",
     "folktale": "^2.0.1",
     "ramda": "^0.25.0",

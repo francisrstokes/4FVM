@@ -1,3 +1,4 @@
+const Future = require('fluture');
 const patterns = require('./parser/patterns');
 const { getLabelValue } = require('./util/labels');
 const { reduce, merge } = require('ramda');
@@ -7,7 +8,7 @@ const doubleLabelCheck = reduce((prev, next) => {
 
   const isDoubleLabel = (prev.type === patterns.LABEL && next.type === patterns.LABEL);
   const msg = (isDoubleLabel)
-    ? `4FVM Program cannot contain sequential labels. Found @ label [${getLabelValue(prev)}]`
+    ? `Program cannot contain sequential labels. Found @ label [${getLabelValue(prev)}]`
     : '';
   return merge(next, { found: isDoubleLabel, msg });
 }, { type: null, found: false, msg: '' });
@@ -15,9 +16,9 @@ const doubleLabelCheck = reduce((prev, next) => {
 module.exports = (ast) => {
   const { found, msg } = doubleLabelCheck(ast);
   if (found) {
-    throw new Error(msg);
+    return Future.reject(msg);
   }
 
-  return ast;
+  return Future.of(ast);
 };
 

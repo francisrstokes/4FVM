@@ -11,7 +11,7 @@ module.exports = [
     {
       type: patterns.JG_NUM,
       operands: [
-        [ot.NUM, 1]
+        { type: ot.NUM, value: 1 }
       ]
     }
   ],
@@ -23,7 +23,7 @@ module.exports = [
     {
       type: patterns.JG_PTR,
       operands: [
-        [ot.PTR, 1]
+        { type: ot.REG, value: 1 }
       ]
     }
   ]

@@ -1,10 +1,11 @@
 const Future = require('fluture');
-const { compose } = require('ramda');
-
 const tokenise = require('./tokeniser');
 const parse = require('./parser');
 const encode = require('./encode');
 const validateAST = require('./validate-ast');
+
+// const src = `
+// `;
 
 const src = `
 myprogram:
@@ -24,24 +25,20 @@ place:
   SWP A, B
 `;
 
-const encodeSrc = compose(encode, validateAST, parse, tokenise);
 
 const program = Future
   .of(src)
-  .map(encodeSrc);
+  .chain(tokenise)
+  .chain(parse)
+  .chain(validateAST)
+  .chain(encode);
 
 program.fork(
   (err) => {
     console.log(`4FVM Error: ${err}`)
   },
   (x) => {
-    console.log(x);
+    console.log(JSON.stringify(x, null, '  '));
     debugger;
   }
 );
-
-// (async () => {
-//   const tokens = tokenise(program);
-//   const parseTree = parse(tokens);
-//   const encoded = await encode(parseTree);
-// })();

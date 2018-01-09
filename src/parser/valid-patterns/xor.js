@@ -13,8 +13,8 @@ module.exports = [
     {
       type: patterns.XOR_REG_NUM,
       operands: [
-        [ot.REG, 1],
-        [ot.NUM, 3]
+        { type: ot.REG, value: 1 },
+        { type: ot.NUM, value: 3 }
       ]
     }
   ],
@@ -28,8 +28,8 @@ module.exports = [
     {
       type: patterns.XOR_REG_REG,
       operands: [
-        [ot.REG, 1],
-        [ot.REG, 3]
+        { type: ot.REG, value: 1 },
+        { type: ot.REG, value: 3 }
       ]
     }
   ],
@@ -43,8 +43,8 @@ module.exports = [
     {
       type: patterns.XOR_REG_PTR,
       operands: [
-        [ot.REG, 1],
-        [ot.PTR, 3]
+        { type: ot.REG, value: 1 },
+        { type: ot.REG, value: 3 }
       ]
     }
   ]

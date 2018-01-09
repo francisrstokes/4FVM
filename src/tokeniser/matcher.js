@@ -2,17 +2,17 @@ const tokenTypes = require('../token-types');
 
 module.exports = [
   // Whitespace and Newlines
-  [' ', tokenTypes.WHITESPACE],
-  ['\t', tokenTypes.WHITESPACE],
-  [/\n$/, tokenTypes.NEWLINE],
+  [/^\n$/, tokenTypes.NEWLINE],
+  [/^\t/, tokenTypes.WHITESPACE],
+  [/^\s+$/, tokenTypes.WHITESPACE],
 
   // Numbers
   ['0x', [
-    [/[0-9A-F]{1,4}$/, tokenTypes.HEX_VALUE]
+    [/^[0-9A-F]{1,4}$/, tokenTypes.HEX_VALUE]
   ]],
-  [/[0-9]+$/, tokenTypes.DEC_VALUE],
+  [/^[0-9]+$/, tokenTypes.DEC_VALUE],
 
-  [/[a-zA-Z0-9]+$/, [
+  [/^[a-zA-Z0-9]+$/, [
     [':', tokenTypes.LABEL]
   ]],
 

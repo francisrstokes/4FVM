@@ -11,7 +11,7 @@ module.exports = [
     {
       type: patterns.POP_REG,
       operands: [
-        [ot.REG, 1]
+        { type: ot.REG, value: 1 }
       ]
     }
   ]

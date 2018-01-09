@@ -13,8 +13,8 @@ module.exports = [
     {
       type: patterns.SWP,
       operands: [
-        [ot.REG, 1],
-        [ot.REG, 3]
+        { type: ot.REG, value: 1 },
+        { type: ot.REG, value: 3 }
       ]
     }
   ]

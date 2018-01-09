@@ -11,7 +11,7 @@ module.exports = [
     {
       type: patterns.INT_NUM,
       operands: [
-        [ot.NUM, 1]
+        { type: ot.NUM, value: 1 }
       ]
     }
   ]
