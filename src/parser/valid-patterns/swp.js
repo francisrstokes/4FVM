@@ -1,5 +1,6 @@
 const tt = require('../../token-types');
 const patterns = require('../patterns');
+const ot = require('../../operand-types');
 
 module.exports = [
   [
@@ -10,8 +11,11 @@ module.exports = [
       [tt.REG_A, tt.REG_B, tt.REG_C, tt.REG_D]
     ],
     {
-      type: patterns.SWP_NUM,
-      operands: [1, 3]
+      type: patterns.SWP,
+      operands: [
+        { type: ot.REG, value: 1 },
+        { type: ot.REG, value: 3 }
+      ]
     }
   ]
 ];

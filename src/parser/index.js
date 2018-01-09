@@ -1,10 +1,16 @@
+const Future = require('fluture');
 const preprocessTokens = require('./preprocess-tokens');
 const validPatterns = require('./valid-patterns');
+const { flip, nth, prop, map, compose, lensPath, lensProp, over } = require('ramda');
 
-const matchPattern = (checkTokens) =>
-  (validTokens, ci) => {
-    return validTokens.includes(checkTokens[ci].type);
-  };
+const matchPattern = (checkTokens) => (validTokens, ci) => {
+  return validTokens.includes(checkTokens[ci].type);
+};
+
+const populateOperands = (checkTokens) => (operand) => {
+  const getTokenValue = compose(prop('value'), flip(nth)(checkTokens));
+  return over(lensProp('value'), getTokenValue, operand);
+};
 
 module.exports = (_tokens) => {
   const tokens = preprocessTokens(_tokens);
@@ -20,19 +26,16 @@ module.exports = (_tokens) => {
       const isMatch = check.every(matchPattern(checkTokens));
 
       if (isMatch) {
-        const operands = descriptor.operands.map(index => checkTokens[index]);
-        tree.push({
-          type: descriptor.type,
-          operands
-        });
+        const populateDescriptor = over(lensPath(['operands']), map(populateOperands(checkTokens)));
+        tree.push(populateDescriptor(descriptor));
         i += check.length - 1;
         break;
       }
     }
     if (startTree === tree.length) {
-      console.log('Invalid instruction encountered at token: ', JSON.stringify(tokens[i]));
+      return Future.reject(`Invalid instruction encountered at token: ${JSON.stringify(tokens[i])}`);
     }
   }
 
-  return tree;
+  return Future.of(tree);
 };

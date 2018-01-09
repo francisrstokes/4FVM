@@ -10,3 +10,4 @@ semantic
 .vscode
 bin/
 commands.txt
+test.bin

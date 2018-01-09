@@ -1,5 +1,6 @@
 const tt = require('../../token-types');
 const patterns = require('../patterns');
+const ot = require('../../operand-types');
 
 module.exports = [
   [
@@ -7,11 +8,14 @@ module.exports = [
       [tt.LD],
       [tt.REG_A, tt.REG_B, tt.REG_C, tt.REG_D],
       [tt.OPERAND_SEPARATOR],
-      [tt.HEX_VALUE, tt.DEC_VALUE]
+      [tt.HEX_VALUE, tt.DEC_VALUE, tt.LABEL]
     ],
     {
       type: patterns.LD_REG_NUM,
-      operands: [1, 3]
+      operands: [
+        { type: ot.REG, value: 1 },
+        { type: ot.NUM, value: 3 }
+      ]
     }
   ],
   [
@@ -23,7 +27,10 @@ module.exports = [
     ],
     {
       type: patterns.LD_REG_REG,
-      operands: [1, 3]
+      operands: [
+        { type: ot.REG, value: 1 },
+        { type: ot.REG, value: 3 }
+      ]
     }
   ],
   [
@@ -34,8 +41,11 @@ module.exports = [
       [tt.PTR_A, tt.PTR_B, tt.PTR_C, tt.PTR_D]
     ],
     {
-      type: patterns.LD_REG_REGPTR,
-      operands: [1, 3]
+      type: patterns.LD_REG_PTR,
+      operands: [
+        { type: ot.REG, value: 1 },
+        { type: ot.REG, value: 3 }
+      ]
     }
   ],
 
@@ -44,11 +54,14 @@ module.exports = [
       [tt.LD],
       [tt.HEX_VALUE, tt.DEC_VALUE],
       [tt.OPERAND_SEPARATOR],
-      [tt.HEX_VALUE, tt.DEC_VALUE]
+      [tt.HEX_VALUE, tt.DEC_VALUE, tt.LABEL]
     ],
     {
-      type: patterns.LD_ADDR_NUM,
-      operands: [1, 3]
+      type: patterns.LD_NUM_NUM,
+      operands: [
+        { type: ot.NUM, value: 1 },
+        { type: ot.NUM, value: 3 }
+      ]
     }
   ],
   [
@@ -59,8 +72,11 @@ module.exports = [
       [tt.REG_A, tt.REG_B, tt.REG_C, tt.REG_D]
     ],
     {
-      type: patterns.LD_ADDR_REG,
-      operands: [1, 3]
+      type: patterns.LD_NUM_REG,
+      operands: [
+        { type: ot.NUM, value: 1 },
+        { type: ot.REG, value: 3 }
+      ]
     }
   ],
   [
@@ -71,45 +87,57 @@ module.exports = [
       [tt.PTR_A, tt.PTR_B, tt.PTR_C, tt.PTR_D]
     ],
     {
-      type: patterns.LD_ADDR_REGPTR,
-      operands: [1, 3]
+      type: patterns.LD_NUM_PTR,
+      operands: [
+        { type: ot.NUM, value: 1 },
+        { type: ot.REG, value: 3 }
+      ]
     }
   ],
 
   [
     [
       [tt.LD],
-      [tt.ADDR_A, tt.ADDR_B, tt.ADDR_C, tt.ADDR_D],
+      [tt.PTR_A, tt.PTR_B, tt.PTR_C, tt.PTR_D],
       [tt.OPERAND_SEPARATOR],
-      [tt.HEX_VALUE, tt.DEC_VALUE]
+      [tt.HEX_VALUE, tt.DEC_VALUE, tt.LABEL]
     ],
     {
-      type: patterns.LD_REG_ADDR_NUM,
-      operands: [1, 3]
+      type: patterns.LD_PTR_NUM,
+      operands: [
+        { type: ot.REG, value: 1 },
+        { type: ot.NUM, value: 3 }
+      ]
     }
   ],
   [
     [
       [tt.LD],
-      [tt.ADDR_A, tt.ADDR_B, tt.ADDR_C, tt.ADDR_D],
+      [tt.PTR_A, tt.PTR_B, tt.PTR_C, tt.PTR_D],
       [tt.OPERAND_SEPARATOR],
       [tt.REG_A, tt.REG_B, tt.REG_C, tt.REG_D]
     ],
     {
-      type: patterns.LD_REG_ADDR_REG,
-      operands: [1, 3]
+      type: patterns.LD_PTR_REG,
+      operands: [
+        { type: ot.REG, value: 1 },
+        { type: ot.REG, value: 3 }
+      ]
     }
   ],
   [
     [
       [tt.LD],
-      [tt.ADDR_A, tt.ADDR_B, tt.ADDR_C, tt.ADDR_D],
+      [tt.PTR_A, tt.PTR_B, tt.PTR_C, tt.PTR_D],
       [tt.OPERAND_SEPARATOR],
       [tt.PTR_A, tt.PTR_B, tt.PTR_C, tt.PTR_D]
     ],
     {
-      type: patterns.LD_REG_ADDR_REGPTR,
-      operands: [1, 3]
+      type: patterns.LD_PTR_PTR,
+      operands: [
+        { type: ot.REG, value: 1 },
+        { type: ot.REG, value: 3 }
+      ]
     }
   ]
 ];

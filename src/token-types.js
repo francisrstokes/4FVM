@@ -37,12 +37,5 @@ module.exports = {
   PTR_A: 'ptr_a',
   PTR_B: 'ptr_b',
   PTR_C: 'ptr_c',
-  PTR_D: 'ptr_d',
-
-  ADDR_A: 'addr_a',
-  ADDR_B: 'addr_b',
-  ADDR_C: 'addr_c',
-  ADDR_D: 'addr_d',
-  ADDR_HEX: 'addr_hex',
-  ADDR_DEC: 'addr_dec'
+  PTR_D: 'ptr_d'
 };

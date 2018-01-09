@@ -1,25 +1,30 @@
 const tt = require('../../token-types');
 const patterns = require('../patterns');
+const ot = require('../../operand-types');
 
 module.exports = [
   [
     [
       [tt.JG],
-      [tt.HEX_VALUE, tt.DEC_VALUE]
+      [tt.HEX_VALUE, tt.DEC_VALUE, tt.LABEL]
     ],
     {
       type: patterns.JG_NUM,
-      operands: [1]
+      operands: [
+        { type: ot.NUM, value: 1 }
+      ]
     }
   ],
   [
     [
       [tt.JG],
-      [tt.ADDR_A, tt.ADDR_B, tt.ADDR_C, tt.ADDR_D]
+      [tt.PTR_A, tt.PTR_B, tt.PTR_C, tt.PTR_D]
     ],
     {
-      type: patterns.JG_REG_ADDR,
-      operands: [1]
+      type: patterns.JG_PTR,
+      operands: [
+        { type: ot.REG, value: 1 }
+      ]
     }
   ]
 ];

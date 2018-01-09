@@ -1,3 +1,5 @@
+const Future = require('fluture');
+
 const matcher = require('./matcher');
 const createToken = require('./create-token');
 
@@ -95,8 +97,8 @@ module.exports = (input) => {
   }
 
   if (checkStr !== '') {
-    console.log(`Unrecognised token '${checkStr}' at position ${input.length - checkStr.length}`)
+    return Future.reject(`Unrecognised token '${checkStr}' at position ${input.length - checkStr.length}`);
   }
 
-  return tokens;
+  return Future.of(tokens);
 }

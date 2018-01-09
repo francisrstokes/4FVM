@@ -1,45 +1,25 @@
-const add = require('./add');
-const cmp = require('./cmp');
-const jeq = require('./jeq');
-const jl = require('./jl');
-const jnz = require('./jnz');
-const label = require('./label');
-const lsf = require('./lsf');
-const not = require('./not');
-const pop = require('./pop');
-const rsf = require('./rsf');
-const swp = require('./swp');
-const and = require('./and');
-const int = require('./int');
-const jg = require('./jg');
-const jne = require('./jne');
-const jz = require('./jz');
-const ld = require('./ld');
-const nop = require('./nop');
-const or = require('./or');
-const psh = require('./psh');
-const sub = require('./sub');
-
+/* eslint-disable global-require */
 module.exports = [
-  ...add,
-  ...cmp,
-  ...jeq,
-  ...jl,
-  ...jnz,
-  ...label,
-  ...lsf,
-  ...not,
-  ...pop,
-  ...rsf,
-  ...swp,
-  ...and,
-  ...int,
-  ...jg,
-  ...jne,
-  ...jz,
-  ...ld,
-  ...nop,
-  ...or,
-  ...psh,
-  ...sub
+  ...require('./add'),
+  ...require('./cmp'),
+  ...require('./jeq'),
+  ...require('./jl'),
+  ...require('./jnz'),
+  ...require('./label'),
+  ...require('./lsf'),
+  ...require('./not'),
+  ...require('./pop'),
+  ...require('./rsf'),
+  ...require('./swp'),
+  ...require('./and'),
+  ...require('./int'),
+  ...require('./jg'),
+  ...require('./jne'),
+  ...require('./jz'),
+  ...require('./ld'),
+  ...require('./nop'),
+  ...require('./or'),
+  ...require('./psh'),
+  ...require('./sub')
 ];
+/* eslint-enable global-require */

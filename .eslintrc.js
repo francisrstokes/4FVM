@@ -107,7 +107,7 @@ module.exports = {
             "error",
             "always"
         ],
-        "new-cap": "error",
+        "new-cap": "off",
         "new-parens": "error",
         "newline-after-var": "off",
         "newline-before-return": "off",

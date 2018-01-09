@@ -1,5 +1,6 @@
 const tt = require('../../token-types');
 const patterns = require('../patterns');
+const ot = require('../../operand-types');
 
 module.exports = [
   [
@@ -11,7 +12,10 @@ module.exports = [
     ],
     {
       type: patterns.RSF_REG_NUM,
-      operands: [1, 3]
+      operands: [
+        { type: ot.REG, value: 1 },
+        { type: ot.NUM, value: 3 }
+      ]
     }
   ]
 ];

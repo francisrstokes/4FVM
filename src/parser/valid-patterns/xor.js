@@ -1,5 +1,6 @@
 const tt = require('../../token-types');
 const patterns = require('../patterns');
+const ot = require('../../operand-types');
 
 module.exports = [
   [
@@ -11,7 +12,10 @@ module.exports = [
     ],
     {
       type: patterns.XOR_REG_NUM,
-      operXORs: [1, 3]
+      operands: [
+        { type: ot.REG, value: 1 },
+        { type: ot.NUM, value: 3 }
+      ]
     }
   ],
   [
@@ -23,7 +27,10 @@ module.exports = [
     ],
     {
       type: patterns.XOR_REG_REG,
-      operXORs: [1, 3]
+      operands: [
+        { type: ot.REG, value: 1 },
+        { type: ot.REG, value: 3 }
+      ]
     }
   ],
   [
@@ -34,8 +41,11 @@ module.exports = [
       [tt.PTR_A, tt.PTR_B, tt.PTR_C, tt.PTR_D]
     ],
     {
-      type: patterns.XOR_REG_REGPTR,
-      operXORs: [1, 3]
+      type: patterns.XOR_REG_PTR,
+      operands: [
+        { type: ot.REG, value: 1 },
+        { type: ot.REG, value: 3 }
+      ]
     }
   ]
 ];

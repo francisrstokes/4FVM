@@ -18,13 +18,12 @@ const resolveNumbers = mapTransducer((token) => {
   return Object.assign({}, token, { value });
 });
 
-const resolveAddressesAndPointers = mapTransducer((token) => {
-  const addressesAndPointers = [
-    tt.ADDR_A, tt.ADDR_B, tt.ADDR_C, tt.ADDR_D,
+const resolvePointers = mapTransducer((token) => {
+  const pointers = [
     tt.PTR_A, tt.PTR_B, tt.PTR_C, tt.PTR_D
   ];
   let value = token.value;
-  if (addressesAndPointers.includes(token.type)) {
+  if (pointers.includes(token.type)) {
     value = token.value[1];
   }
   return Object.assign({}, token, { value });
@@ -37,7 +36,7 @@ const filterTokens = filterTransducer((token) =>
 const preprocessTokens = compose(
   filterTokens,
   resolveNumbers,
-  resolveAddressesAndPointers
+  resolvePointers
 );
 
 module.exports = (tokens) =>

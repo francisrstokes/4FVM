@@ -1,5 +1,6 @@
 const tt = require('../../token-types');
 const patterns = require('../patterns');
+const ot = require('../../operand-types');
 
 module.exports = [
   [
@@ -9,7 +10,9 @@ module.exports = [
     ],
     {
       type: patterns.INT_NUM,
-      operands: [1]
+      operands: [
+        { type: ot.NUM, value: 1 }
+      ]
     }
   ]
 ];
