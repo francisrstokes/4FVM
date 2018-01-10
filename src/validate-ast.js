@@ -2,26 +2,17 @@ const Future = require('fluture');
 const Result = require('folktale/result');
 
 const patterns = require('./parser/patterns');
-const { mFold, mChain } = require('./util');
+const { result, chainEffect } = require('./util');
 const { getLabelValue } = require('./util/labels');
-const { reduce, reduced, compose, contains, always } = require('ramda');
+const { reduce, reduced, compose, contains } = require('ramda');
 
-// resultWrapper :: ([Token] -> Result String null) -> ((Result String [Token]) -> (Result String [Token]))
-const resultDecorator = (fn) =>
-  (rTokens) => {
-    // Propogate errors
-    if (Result.Error.hasInstance(rTokens)) {
-      return rTokens;
-    }
-    return mFold(
-      Result.Error,
-      always(rTokens),
-      mChain(fn, rTokens)
-    );
-  }
+// Using chainEffect to decorate the check functions. This allows writing checks that take a
+// Result Error [Tokens], and can return a Result Error in case something goes wrong, but return
+// the same Result Error [Tokens] if things are OK, instead of whatever intermediate junk they built
+// up in order to perform the check.
 
 // sequentialLabelCheck :: (Result String [Token]) -> (Result String [Token])
-const sequentialLabelCheck = resultDecorator(
+const sequentialLabelCheck = chainEffect(
   reduce((prev, next) => {
     const pToken = prev.matchWith({ Ok: (x) => x.value });
     if (pToken.type === patterns.LABEL && next.type === patterns.LABEL) {
@@ -32,7 +23,7 @@ const sequentialLabelCheck = resultDecorator(
 );
 
 // sameLabelCheck :: (Result String [Token]) -> (Result String [Token])
-const sameLabelCheck = resultDecorator(
+const sameLabelCheck = chainEffect(
   reduce((rAcc, token) => {
     const acc = rAcc.matchWith({ Ok: x => x.value });
     if (token.type === patterns.LABEL) {
@@ -46,9 +37,10 @@ const sameLabelCheck = resultDecorator(
   }, Result.Ok([]))
 );
 
+const validations = compose(sameLabelCheck, sequentialLabelCheck);
+
 module.exports = compose(
-  mFold(Future.reject, Future.of),
-  sameLabelCheck,
-  sequentialLabelCheck,
+  result(Future.reject, Future.of),
+  validations,
   Result.Ok
 );

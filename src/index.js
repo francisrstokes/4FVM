@@ -12,7 +12,7 @@ const src = `
 myprogram:
   LD 0xAF, place:
   NOP
-myprogram:
+
 
   JNZ place:
   LD 0xAD42, A

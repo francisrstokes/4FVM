@@ -1,5 +1,5 @@
 const Future = require('fluture');
-const { prop, compose, map, curry, reduce, addIndex } = require('ramda');
+const { prop, compose, map, curry, reduce, addIndex, chain } = require('ramda');
 
 // clamp :: Int -> Int -> Int -> Int
 const clamp = curry((min, max, value) =>
@@ -40,11 +40,14 @@ const toBuffer = compose(Future.encase(Buffer.from), prop('buffer'));
 // toUint16 :: [Int] -> [Uint16]
 const toUint16 = (arr) => new Uint16Array(arr);
 
-// mFold :: (e -> b) -> (a -> c) -> M e a -> (b | c)
-const mFold = curry((errFn, successFn, M) => M.fold(errFn, successFn, M));
+// result :: (e -> b) -> (a -> c) -> Result e a -> (b | c)
+const result = curry((errFn, successFn, M) => M.fold(errFn, successFn, M));
 
-// mChain :: (a -> M b) -> M a -> M b
-const mChain = curry((fn, M) => M.chain(fn));
+// effect :: (a -> b) -> M a -> M a
+const effect = curry((fn, x) => map(() => x, fn(x)))
+
+// chainEffect :: M a -> (a -> M b) -> M a
+const chainEffect = compose(chain, effect);
 
 module.exports = {
   achain,
@@ -58,6 +61,7 @@ module.exports = {
   indexOf,
   toUint16,
   toBuffer,
-  mFold,
-  mChain
+  result,
+  effect,
+  chainEffect
 };
