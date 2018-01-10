@@ -2,9 +2,9 @@ const Future = require('fluture');
 const Result = require('folktale/result');
 
 const patterns = require('./parser/patterns');
-const { mFold } = require('./util');
+const { mFold, mChain } = require('./util');
 const { getLabelValue } = require('./util/labels');
-const { reduce, reduced, compose, contains } = require('ramda');
+const { reduce, reduced, compose, contains, always } = require('ramda');
 
 // resultWrapper :: ([Token] -> Result String null) -> ((Result String [Token]) -> (Result String [Token]))
 const resultDecorator = (fn) =>
@@ -13,12 +13,11 @@ const resultDecorator = (fn) =>
     if (Result.Error.hasInstance(rTokens)) {
       return rTokens;
     }
-    const tokens = rTokens.matchWith({ Ok: (x) => x.value });
-    const testResult = fn(tokens);
-    if (Result.Error.hasInstance(testResult)) {
-      return testResult;
-    }
-    return rTokens;
+    return mFold(
+      Result.Error,
+      always(rTokens),
+      mChain(fn, rTokens)
+    );
   }
 
 // sequentialLabelCheck :: (Result String [Token]) -> (Result String [Token])
