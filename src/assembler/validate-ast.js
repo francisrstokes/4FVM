@@ -1,4 +1,3 @@
-const Future = require('fluture');
 const Result = require('folktale/result');
 
 const patterns = require('../constants/patterns');
@@ -37,10 +36,8 @@ const sameLabelCheck = chainEffect(
   }, Result.Ok([]))
 );
 
-const validations = compose(sameLabelCheck, sequentialLabelCheck);
-
+// validateAST :: Result String [Token] :: Result String [Token]
 module.exports = compose(
-  result(Future.reject, Future.of),
-  validations,
-  Result.Ok
+  sameLabelCheck,
+  sequentialLabelCheck
 );

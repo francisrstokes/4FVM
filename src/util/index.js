@@ -1,6 +1,6 @@
-const Future = require('fluture');
+const Result = require('folktale/result');
 const Maybe = require('folktale/maybe');
-const { prop, compose, map, curry, reduce, addIndex, chain } = require('ramda');
+const { prop, compose, map, curry, reduce, addIndex, chain, curryN } = require('ramda');
 
 // clamp :: Int -> Int -> Int -> Int
 const clamp = curry((min, max, value) =>
@@ -35,8 +35,17 @@ const achain = (fn) => compose(flatten, map(fn));
 // indexOf :: [a] -> a -> Int
 const indexOf = curry((xs, x) => xs.indexOf(x));
 
-// toBuffer :: [Uint16] -> Future Error Buffer Int
-const toBuffer = compose(Future.encase(Buffer.from), prop('buffer'));
+// tryTo :: (b -> x) -> (b -> y) -> (a -> b) -> a -> (x | y)
+const tryTo = curry((rej, res, f, x) => {
+  try {
+    return res(f(x));
+  } catch (ex) {
+    return rej(ex);
+  }
+});
+
+// toBuffer :: [Uint16] -> Result Error (Buffer Int)
+const toBuffer = compose(tryTo(Result.Error, Result.Ok, Buffer.from), prop('buffer'));
 
 // toUint16 :: [Int] -> [Uint16]
 const toUint16 = (arr) => new Uint16Array(arr);
@@ -91,5 +100,6 @@ module.exports = {
   maybefy,
   maybeString,
   maybeNumber,
-  maybeBoolean
+  maybeBoolean,
+  tryTo
 };

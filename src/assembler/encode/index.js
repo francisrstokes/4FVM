@@ -1,4 +1,4 @@
-const Future = require('fluture');
+const Result = require('folktale/result');
 const patterns = require('../../constants/patterns');
 const {
   map,
@@ -11,7 +11,8 @@ const getEncodedParts = require('./get-encoded-parts');
 const applyLabels = require('./apply-labels');
 const createLabelTable = require('./create-label-table');
 
-module.exports = (ast) => {
+// encode :: Result String [Instructions] -> Result String [Uint16]
+module.exports = map((ast) => {
   const lt = createLabelTable(ast);
 
   // encode :: [Instruction] -> [Uint16]
@@ -22,5 +23,5 @@ module.exports = (ast) => {
     filter((pattern) => pattern.type !== patterns.LABEL)
   );
 
-  return Future.of(encode(ast));
-};
+  return encode(ast);
+});
