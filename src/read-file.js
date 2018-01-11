@@ -4,6 +4,4 @@ const { curry } = require('ramda');
 
 // readFile :: String -> String -> Future Error String
 module.exports = curry((encoding, filename) =>
-  Future.node(done => {
-   return readFile(filename, { encoding }, done)
-  }));
+  Future.node(done => readFile(filename, { encoding }, done)));

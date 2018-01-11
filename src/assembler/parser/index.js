@@ -1,7 +1,7 @@
-const Future = require('fluture');
+const Result = require('folktale/result');
 const preprocessTokens = require('./preprocess-tokens');
 const validPatterns = require('./valid-patterns');
-const { flip, nth, prop, map, compose, lensPath, lensProp, over } = require('ramda');
+const { flip, nth, prop, map, compose, lensPath, lensProp, over, chain } = require('ramda');
 
 // matchPattern :: [Token] -> [TokenType] -> Int -> Boolean
 const matchPattern = (checkTokens) => (validTokens, ci) => {
@@ -15,8 +15,8 @@ const populateOperands = (checkTokens) => (operand) => {
   return over(lensProp('value'), getTokenValue, operand);
 };
 
-// parse :: [Token] -> Future Error [Instruction]
-module.exports = (_tokens) => {
+// parse :: Result String [Token] -> Result Error [Instruction]
+module.exports = chain((_tokens) => {
   const tokens = preprocessTokens(_tokens);
   const tree = [];
 
@@ -37,9 +37,9 @@ module.exports = (_tokens) => {
       }
     }
     if (startTree === tree.length) {
-      return Future.reject(`Parser Error: Invalid instruction encountered at token: ${JSON.stringify(tokens[i])}`);
+      return Result.Error(`Parser Error: Invalid instruction encountered at token: ${JSON.stringify(tokens[i])}`);
     }
   }
 
-  return Future.of(tree);
-};
+  return Result.Ok(tree);
+});

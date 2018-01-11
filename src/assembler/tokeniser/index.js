@@ -1,5 +1,5 @@
-const Future = require('fluture');
 const Maybe = require('folktale/maybe');
+const Result = require('folktale/result');
 const { prop } = require('ramda');
 
 const matcher = require('./matcher');
@@ -87,7 +87,7 @@ const branchMatch = {
   }
 }
 
-// tokenise :: String -> Future Error [Token]
+// tokenise :: String -> Result String [Token]
 module.exports = (input) => {
   let checkStr = '';
   const tokens = [];
@@ -115,8 +115,8 @@ module.exports = (input) => {
   }
 
   if (checkStr !== '') {
-    return Future.reject(`Tokenisation Error: Unrecognised token '${checkStr}' at position ${input.length - checkStr.length}`);
+    return Result.Error(`Tokenisation Error: Unrecognised token '${checkStr}' at position ${input.length - checkStr.length}`);
   }
 
-  return Future.of(tokens);
+  return Result.Ok(tokens);
 }
