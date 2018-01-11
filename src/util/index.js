@@ -1,4 +1,5 @@
 const Future = require('fluture');
+const Maybe = require('folktale/maybe');
 const { prop, compose, map, curry, reduce, addIndex, chain } = require('ramda');
 
 // clamp :: Int -> Int -> Int -> Int
@@ -43,11 +44,33 @@ const toUint16 = (arr) => new Uint16Array(arr);
 // result :: (e -> b) -> (a -> c) -> Result e a -> (b | c)
 const result = curry((errFn, successFn, M) => M.fold(errFn, successFn, M));
 
+// result :: (_ -> b) -> (a -> c) -> Maybe a -> (b | c)
+const maybe = curry((errFn, successFn, M) => M.fold(errFn, successFn, M));
+
 // effect :: (a -> b) -> M a -> M a
 const effect = curry((fn, x) => map(() => x, fn(x)))
 
 // chainEffect :: M a -> (a -> M b) -> M a
 const chainEffect = compose(chain, effect);
+
+// maybePredicate :: (a -> Boolean) -> a -> Maybe a
+const maybePredicate = (predicate) => (thing) =>
+  (predicate(thing))
+    ? Maybe.of(thing)
+    : Maybe.Nothing();
+
+// maybeString :: a -> Maybe a
+const maybeString = maybePredicate((x) => (typeof x === 'string'));
+
+// maybeNumber :: a -> Maybe a
+const maybeNumber = maybePredicate((x) => (typeof x === 'number'));
+
+// maybeBoolean :: a -> Maybe a
+const maybeBoolean = maybePredicate((x) => (typeof x === 'boolean'));
+
+// maybefy :: a -> M a
+const maybefy = maybePredicate((x) => (typeof x !== 'undefined'));
+
 
 module.exports = {
   achain,
@@ -63,5 +86,10 @@ module.exports = {
   toBuffer,
   result,
   effect,
-  chainEffect
+  chainEffect,
+  maybe,
+  maybefy,
+  maybeString,
+  maybeNumber,
+  maybeBoolean
 };
