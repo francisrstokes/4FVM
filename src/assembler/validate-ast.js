@@ -1,7 +1,7 @@
 const Result = require('folktale/result');
 
 const patterns = require('../constants/patterns');
-const { result, chainEffect } = require('../util');
+const { chainEffect } = require('../util');
 const { getLabelValue } = require('../util/labels');
 const { reduce, reduced, compose, contains } = require('ramda');
 
@@ -10,7 +10,7 @@ const { reduce, reduced, compose, contains } = require('ramda');
 // the same (Result Error [Tokens]) if things are OK, instead of whatever intermediate junk they built
 // up in order to perform the check. This way validations can be composed.
 
-// sequentialLabelCheck :: (Result String [Token]) -> (Result String [Token])
+// sequentialLabelCheck :: (Result String [Instruction]) -> (Result String [Instruction])
 const sequentialLabelCheck = chainEffect(
   reduce((prev, next) => {
     const pToken = prev.matchWith({ Ok: (x) => x.value });
@@ -21,7 +21,7 @@ const sequentialLabelCheck = chainEffect(
   }, Result.Ok({ type: null }))
 );
 
-// sameLabelCheck :: (Result String [Token]) -> (Result String [Token])
+// sameLabelCheck :: (Result String [Instruction]) -> (Result String [Instruction])
 const sameLabelCheck = chainEffect(
   reduce((rAcc, token) => {
     const acc = rAcc.matchWith({ Ok: x => x.value });
@@ -36,7 +36,7 @@ const sameLabelCheck = chainEffect(
   }, Result.Ok([]))
 );
 
-// validateAST :: Result String [Token] :: Result String [Token]
+// validateAST :: Result String [Instruction] :: Result String [Instruction]
 module.exports = compose(
   sameLabelCheck,
   sequentialLabelCheck
