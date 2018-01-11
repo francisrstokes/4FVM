@@ -11,3 +11,4 @@ semantic
 bin/
 commands.txt
 test.bin
+ignore/*
