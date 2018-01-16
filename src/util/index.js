@@ -46,9 +46,14 @@ const tryTo = curry((rej, res, f, x) => {
 
 // toBuffer :: [Uint16] -> Result Error (Buffer Int)
 const toBuffer = compose(tryTo(Result.Error, Result.Ok, Buffer.from), prop('buffer'));
+// const toBuffer = tryTo(Result.Error, Result.Ok, Buffer.from);
 
 // toUint16 :: [Int] -> [Uint16]
 const toUint16 = (arr) => new Uint16Array(arr);
+
+// toUint8 :: [Int] -> [Uint16]
+const toUint8 = (arr) => new Uint8Array(arr);
+
 
 // result :: (e -> b) -> (a -> c) -> Result e a -> (b | c)
 const result = curry((errFn, successFn, M) => M.fold(errFn, successFn, M));
@@ -91,6 +96,7 @@ module.exports = {
   nativeToString,
   indexedReduce,
   indexOf,
+  toUint8,
   toUint16,
   toBuffer,
   result,

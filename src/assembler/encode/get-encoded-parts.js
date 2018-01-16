@@ -1,15 +1,15 @@
 const ot = require('../../constants/operand-types');
 const registerMap = require('../../constants/register-map');
 const opcodes = require('../../constants/opcodes');
-const { indexOf } = require('../../util');
+
 const {
   __,
   equals,
   ifElse,
   compose,
   prop,
-  map
-  // indexOf
+  map,
+  indexOf
 } = require('ramda');
 
 // getEncodedOperand :: Instruction -> [Int]

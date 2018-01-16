@@ -1,6 +1,6 @@
 const Future = require('fluture');
-const { getStringArg } = require('../util/args');
-const { maybe } = require('../util');
+const { getStringArg } = require('./args');
+const { maybe } = require('./index');
 const { compose } = require('ramda');
 
 // getFilename :: String -> Future Error String
