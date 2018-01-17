@@ -8,10 +8,10 @@ const fromTypedArgFn = (fn) => compose(chain(fn), maybefy, prop(__, yargs));
 // getStringArg :: String -> Maybe String
 const getStringArg = fromTypedArgFn(maybeString);
 
-// getNumberArg :: String -> Maybe String
+// getNumberArg :: String -> Maybe Number
 const getNumberArg = fromTypedArgFn(maybeNumber);
 
-// getBooleanArg :: String -> Maybe String
+// getBooleanArg :: String -> Maybe Boolean
 const getBooleanArg = fromTypedArgFn(maybeBoolean);
 
 module.exports = {

@@ -1,15 +1,6 @@
 const Result = require('folktale/result');
 const Maybe = require('folktale/maybe');
-const { prop, compose, map, curry, reduce, addIndex, chain, curryN } = require('ramda');
-
-// clamp :: Int -> Int -> Int -> Int
-const clamp = curry((min, max, value) =>
-  (value < min)
-    ? min
-    : (value > max)
-      ? max
-      : value
-);
+const { prop, compose, map, curry, reduce, addIndex, chain, clamp } = require('ramda');
 
 // clamp16 :: Int -> Int
 const clamp16 = clamp(0, 0xFFFF);
@@ -85,11 +76,11 @@ const maybeBoolean = maybePredicate((x) => (typeof x === 'boolean'));
 // maybefy :: a -> M a
 const maybefy = maybePredicate((x) => (typeof x !== 'undefined'));
 
+const uint16Array = (size) => new Uint16Array(size);
 
 module.exports = {
   achain,
   flatten,
-  clamp,
   clamp16,
   arrToObjKeys,
   regexTest,
@@ -107,5 +98,6 @@ module.exports = {
   maybeString,
   maybeNumber,
   maybeBoolean,
-  tryTo
+  tryTo,
+  uint16Array
 };
