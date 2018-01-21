@@ -1,7 +1,9 @@
 const Result = require('folktale/result');
-const { __, pipe, compose, identity, ifElse, length, lt, map, objOf, addIndex, nth, merge } = require('ramda');
-const { maybe, uint16Array } = require('../util');
+const { __, pipe, compose, ifElse, length, lt, map, objOf, addIndex, nth, merge } = require('ramda');
+const { fromMaybe, uint16Array } = require('../util');
 const { getNumberArg } = require('../util/args');
+
+// data MachineState = { memory :: [uint16], registers :: StrMap Number }
 
 // loadWith :: [Int] -> [Uint16] -> [Uint16]
 const loadWith = (instructions) =>
@@ -10,10 +12,11 @@ const loadWith = (instructions) =>
       ? nth(i, instructions)
       : v);
 
+
 // createMachineState :: [Int] -> Result String MachineState
 module.exports = (instructions) => {
   return pipe(
-    maybe(() => 1024 * 10, identity),
+    fromMaybe(1024 * 10),
     ifElse(
       lt(__, length(instructions)),
       (mem) => Result.Error(`Program size is larger than available memory (${mem})`),

@@ -1,6 +1,17 @@
 const Result = require('folktale/result');
 const Maybe = require('folktale/maybe');
-const { prop, compose, map, curry, reduce, addIndex, chain, clamp } = require('ramda');
+const {
+  prop,
+  compose,
+  map,
+  curry,
+  reduce,
+  addIndex,
+  chain,
+  clamp,
+  identity,
+  always
+} = require('ramda');
 
 // clamp16 :: Int -> Int
 const clamp16 = clamp(0, 0xFFFF);
@@ -78,6 +89,10 @@ const maybefy = maybePredicate((x) => (typeof x !== 'undefined'));
 
 const uint16Array = (size) => new Uint16Array(size);
 
+
+// fromMaybe :: a -> Maybe a -> a
+const fromMaybe = x => maybe(always(x), identity);
+
 module.exports = {
   achain,
   flatten,
@@ -99,5 +114,6 @@ module.exports = {
   maybeNumber,
   maybeBoolean,
   tryTo,
-  uint16Array
+  uint16Array,
+  fromMaybe
 };
