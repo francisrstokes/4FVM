@@ -37,5 +37,10 @@ module.exports = {
   PTR_A: 'ptr_a',
   PTR_B: 'ptr_b',
   PTR_C: 'ptr_c',
-  PTR_D: 'ptr_d'
+  PTR_D: 'ptr_d',
+
+  ENTRY_POINT: 'entry_point',
+  DATA_START: 'data_start',
+  DATA_END: 'data_end',
+  TEXT_SECTION: 'text_section'
 };

@@ -41,6 +41,14 @@ module.exports = [
   [/^\t/, tokenTypes.WHITESPACE],
   [/^\s+$/, tokenTypes.WHITESPACE],
 
+  // Directives
+  ['.', [
+    ['data_start', tokenTypes.DATA_START],
+    ['data_end', tokenTypes.DATA_END],
+    ['entry_point', tokenTypes.ENTRY_POINT],
+    ['text', tokenTypes.TEXT_SECTION]
+  ]],
+
   // Numbers
   ['0x', [
     [/^[0-9A-F]{1,4}$/, tokenTypes.HEX_VALUE]

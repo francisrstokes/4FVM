@@ -1,5 +1,10 @@
 /* eslint-disable global-require */
 module.exports = [
+  ...require('./data-start'),
+  ...require('./data-end'),
+  ...require('./entry-point'),
+  ...require('./text'),
+
   ...require('./add'),
   ...require('./cmp'),
   ...require('./jeq'),
